@@ -7,7 +7,7 @@ function CameraComponent() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream>(null);
     const canvasRef = useRef < HTMLCanvasElement>(null);
-    const {square, setSquare } = useCommonContext();
+    const {square, setSquare, setCapturedImage, setCapturedSquareData, setStep} = useCommonContext();
 
     const trigarSquare = () => {
 
@@ -60,7 +60,28 @@ function CameraComponent() {
 
 
     const handleContinue = () => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        if (!video || !canvas) return;
 
+        // match canvas to video size
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const imageDataUrl = canvas.toDataURL("image/png");
+
+        setCapturedImage(imageDataUrl)
+        setCapturedSquareData({
+            x: square.x,
+            y: square.y,
+            size: square.size,
+            videoWidth: canvas.width,
+            videoHeight: canvas.height,
+        })
+        setStep('puzzle')
     };
     
     return (
