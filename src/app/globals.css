@@ -24,3 +24,24 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.color-red {
+    background: rgba(255, 0, 0, 0.75);
+}
+
+.color-green {
+    background: rgba(0, 255, 0, 0.75);
+}
+
+.color-blue {
+    background: rgba(0, 0, 255, 0.75);
+}
+
+.shape-triangle.color-red,
+.shape-circle.color-red,
+.shape-square.color-red {
+    border-color: rgba(255,0,0,0.95);
+}
+
+.color-red { background: rgba(255, 0, 0, 0.7); }
+.color-green { background: rgba(0, 255, 0, 0.7); }
+.color-blue { background: rgba(0, 0, 255, 0.7); }

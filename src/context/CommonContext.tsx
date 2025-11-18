@@ -18,6 +18,8 @@ interface SquareData {
 interface CommonContextType {
     square: Square;
     step: string | "camera";
+    result: string | null;
+    setResult: Dispatch<SetStateAction<string>>;
     capturedSquareData: SquareData  | null;
     capturedImage: string | null;
     setStep: Dispatch<SetStateAction<string>>;
@@ -29,6 +31,8 @@ interface CommonContextType {
 const CommonContext = createContext<CommonContextType>({
     square: { x: 50, y: 50, size: 120 },
     step: "camera",
+    result: null,
+    setResult: () => {},
     capturedSquareData: null,
     capturedImage: null,
     setStep: () => {},
@@ -42,6 +46,7 @@ export const CommonContextProvider = ({ children }: { children: ReactNode }) => 
     const [step, setStep] = useState("camera");
     const [capturedSquareData, setCapturedSquareData] = useState(null);
     const [capturedImage, setCapturedImage] = useState(null);
+    const [result, setResult] = useState(null);
 
 
     const contexts = {
@@ -49,7 +54,9 @@ export const CommonContextProvider = ({ children }: { children: ReactNode }) => 
         capturedImage,
         capturedSquareData,
         step,
+        result,
         setSquare,
+        setResult,
         setStep,
         setCapturedImage,
         setCapturedSquareData,
