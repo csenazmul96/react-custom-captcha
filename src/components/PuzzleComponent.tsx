@@ -105,11 +105,12 @@ function PuzzleComponent() {
                 <span className="font-semibold">{targetColor} {targetShape}</span> watermark.
             </p>
             <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden">
-                <img
+                {capturedImage && <img
                     src={capturedImage}
                     alt="Captured frame"
                     className="w-full h-full object-cover"
                 />
+                }
                 <div
                     className="absolute border-1 border-white-400 bg-white/50"
                     style={{

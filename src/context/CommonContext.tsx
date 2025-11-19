@@ -18,23 +18,23 @@ interface SquareData {
 interface CommonContextType {
     square: Square;
     step: string | "camera";
-    result: string | null;
-    setResult: Dispatch<SetStateAction<string>>;
+    result: string | '';
+    setResult: Dispatch<SetStateAction<string | ''>>;
     capturedSquareData: SquareData  | null;
-    capturedImage: string | null;
+    capturedImage: string | '';
     setStep: Dispatch<SetStateAction<string>>;
     setSquare: Dispatch<SetStateAction<Square>>;
-    setCapturedSquareData: Dispatch<SetStateAction<SquareData>>;
-    setCapturedImage: Dispatch<SetStateAction<string | null>>;
+    setCapturedSquareData: Dispatch<SetStateAction<SquareData | null>>;
+    setCapturedImage: Dispatch<SetStateAction<string | ''>>;
 }
 
 const CommonContext = createContext<CommonContextType>({
     square: { x: 50, y: 50, size: 120 },
     step: "camera",
-    result: null,
+    result: '',
     setResult: () => {},
     capturedSquareData: null,
-    capturedImage: null,
+    capturedImage: '',
     setStep: () => {},
     setSquare: () => {},
     setCapturedImage: () => {},
@@ -44,9 +44,9 @@ const CommonContext = createContext<CommonContextType>({
 export const CommonContextProvider = ({ children }: { children: ReactNode }) => {
     const [square, setSquare] = useState<Square>({ x: 50, y: 50, size: 120 });
     const [step, setStep] = useState("camera");
-    const [capturedSquareData, setCapturedSquareData] = useState(null);
-    const [capturedImage, setCapturedImage] = useState(null);
-    const [result, setResult] = useState(null);
+    const [capturedSquareData, setCapturedSquareData] = useState<SquareData | null>(null);
+    const [capturedImage, setCapturedImage] = useState<string | ''>('');
+    const [result, setResult] = useState<string | ''>('');
 
 
     const contexts = {

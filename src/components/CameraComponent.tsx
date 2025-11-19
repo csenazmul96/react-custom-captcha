@@ -77,7 +77,13 @@ console.log(2)
 
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        (ctx as CanvasRenderingContext2D).drawImage(
+            video,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
 
         const imageDataUrl = canvas.toDataURL("image/png"); //capture image from canva for next step
 
