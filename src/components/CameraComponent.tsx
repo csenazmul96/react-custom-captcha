@@ -39,9 +39,7 @@ function CameraComponent() {
                 const frontCameraConstraints = { video: { facingMode: "user" }, audio: false }; //camera setup for front camera
                 const anyCameraConstraints = { video: true, audio: false }; // camera setup for any camera
                 // I am using here universal method for access camera instead of platform wise different approce use.
-                console.log(1)
                 let stream = await navigator.mediaDevices.getUserMedia(frontCameraConstraints); // sometimes make a problem for access front camera device wise
-console.log(2)
                 if (!stream) {
                     stream = await navigator.mediaDevices.getUserMedia(anyCameraConstraints); // trying to access any camera device if first approce is fail
                 }
@@ -77,7 +75,7 @@ console.log(2)
 
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
-        (ctx as CanvasRenderingContext2D).drawImage(
+        ctx.drawImage(
             video,
             0,
             0,
