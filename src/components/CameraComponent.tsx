@@ -36,11 +36,15 @@ function CameraComponent() {
     useEffect(() => { // initially call camera and square tringle run
         async function startCamera() {
             try {
+                const frontCameraConstraints = { video: { facingMode: "user" }, audio: false }; //camera setup for front camera
+                const anyCameraConstraints = { video: true, audio: false }; // camera setup for any camera
                 // I am using here universal method for access camera instead of platform wise different approce use.
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "user" },
-                    audio: false
-                });
+                console.log(1)
+                let stream = await navigator.mediaDevices.getUserMedia(frontCameraConstraints); // sometimes make a problem for access front camera device wise
+console.log(2)
+                if (!stream) {
+                    stream = await navigator.mediaDevices.getUserMedia(anyCameraConstraints); // trying to access any camera device if first approce is fail
+                }
                 streamRef.current = stream;
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
