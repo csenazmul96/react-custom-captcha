@@ -10,7 +10,7 @@ function CameraComponent() {
     const {square, setSquare, setCapturedImage, setCapturedSquareData, setStep} = useCommonContext();
 
     const trigarSquare = () => {
-
+        // change trangle position at every second randomly
         const interval = setInterval(() => {
             const video = videoRef.current;
             if (!video) return;
@@ -33,16 +33,18 @@ function CameraComponent() {
     }
 
 
-    useEffect(() => {
+    useEffect(() => { // initially call camera and square tringle run
         async function startCamera() {
             try {
+                // I am using here universal method for access camera instead of platform wise different approce use.
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: "user" },
+                    audio: false
                 });
                 streamRef.current = stream;
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
-                    trigarSquare()
+                    trigarSquare() // after camera start then start random square movement.
                 }
             } catch (err) {
                 console.error("Camera error:", err);
@@ -64,6 +66,7 @@ function CameraComponent() {
         const canvas = canvasRef.current;
         if (!video || !canvas) return;
 
+
         // match canvas to video size
         canvas.width = video.videoWidth || 640;
         canvas.height = video.videoHeight || 480;
@@ -71,10 +74,10 @@ function CameraComponent() {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        const imageDataUrl = canvas.toDataURL("image/png");
+        const imageDataUrl = canvas.toDataURL("image/png"); //capture image from canva for next step
 
-        setCapturedImage(imageDataUrl)
-        setCapturedSquareData({
+        setCapturedImage(imageDataUrl) // already captured video set to context state
+        setCapturedSquareData({ //set square size and position to context state for next step use
             x: square.x,
             y: square.y,
             size: square.size,

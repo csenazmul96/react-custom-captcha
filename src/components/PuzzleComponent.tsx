@@ -55,26 +55,26 @@ function PuzzleComponent() {
     const ROWS = 5;
     const COLS = 5;
 
-    useEffect(() => {
-        const sectorsData = generateShapeCells();
+    useEffect(() => { // at the beginning generate list of object data structure for  5X5 puzzle squares
+        const sectorsData = generateShapeCells(); // generate actual data structure
         setSectors(sectorsData);
 
         const puzzleShapes = sectorsData.filter((sector) => sector.hasShape);
         if (puzzleShapes.length > 0) {
             const randomIndex = Math.floor(Math.random() * puzzleShapes.length);
             const randomShape = puzzleShapes[randomIndex];
-            setTargetShape(randomShape.shape);
-            setTargetColor(randomShape.color);
+            setTargetShape(randomShape.shape); // set random target shape from generated puzzle data structure
+            setTargetColor(randomShape.color); // set random target color from generated puzzle data structure
         }
     }, []);
 
-    const toggleSector = (id: number) => {
+    const toggleSector = (id: number) => { // handle user click for select any shape or color
         setSelectedIds((prev) =>
             prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
         );
     };
 
-    const correctIds = useMemo(
+    const correctIds = useMemo( // filter out correct IDS from generated data structure
         () => (targetShape && targetColor
                 ? getCorrectSectorIds(sectors, targetShape, targetColor)
                 : []
@@ -82,13 +82,12 @@ function PuzzleComponent() {
         [sectors, targetShape, targetColor]
     );
 
-    const handleValidate = () => {
+    const handleValidate = () => { // handle continue button click for next finish step
         if (!targetShape) return;
         setIsSubmitting(true);
-        const checkResult = sameElements(selectedIds, correctIds)
+        const checkResult = sameElements(selectedIds, correctIds) // check is user selected items is match to target color and shape correct or not
         setResult(checkResult ? 'pass' : 'fail')
         setStep('finish')
-
     };
 
 
