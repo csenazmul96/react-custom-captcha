@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useCommonContext} from "@/context/CommonContext";
-import {generateShapeCells, getCorrectSectorIds, getRandomColor, getRandomShape} from "@/helper/commonHelper";
+import {generateShapeCells, getCorrectSectorIds} from "@/helper/commonHelper";
 
 function ShapeIcon({ shape, color }: { shape: string, color: string }) {
     const tintClass = {
@@ -46,7 +46,7 @@ interface Sector {
 }
 
 function PuzzleComponent() {
-    const {capturedImage, capturedSquareData: square, setStep, setResult} = useCommonContext();
+    const {capturedImage, capturedSquareData: square, setStep,result, setResult} = useCommonContext();
     const [sectors, setSectors] = useState<Sector[]>([]);
     const [targetShape, setTargetShape] = useState<string | null>(null);
     const [targetColor, setTargetColor] = useState<string | null>(null);
@@ -56,12 +56,15 @@ function PuzzleComponent() {
     const COLS = 5;
 
     useEffect(() => {
-        const sectorsData = generateShapeCells()
+        const sectorsData = generateShapeCells();
+        setSectors(sectorsData);
 
-        return () =>{
-            setSectors(sectorsData)
-            setTargetShape(getRandomShape());
-            setTargetColor(getRandomColor());
+        const puzzleShapes = sectorsData.filter((sector) => sector.hasShape);
+        if (puzzleShapes.length > 0) {
+            const randomIndex = Math.floor(Math.random() * puzzleShapes.length);
+            const randomShape = puzzleShapes[randomIndex];
+            setTargetShape(randomShape.shape);
+            setTargetColor(randomShape.color);
         }
     }, []);
 
